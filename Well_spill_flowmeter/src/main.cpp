@@ -8,13 +8,24 @@
 
 float flow_scale = 1;
 volatile unsigned int pulse_count = 0;
-float flow_rate = 0.0;
+float flow_rate = 3.754;
 unsigned long startTime = 0;
-U8G2_SSD1306_128X32_UNIVISION_F_SW_I2C u8g2(U8G2_R0, OLED_SCL, OLED_SDA , OLED_RST);
+String displayText;
+
+U8G2_SSD1306_128X32_UNIVISION_F_HW_I2C u8g2(U8G2_R2, /* reset=*/ U8X8_PIN_NONE, /* clock=*/ SCL, /* data=*/ SDA);   // pin remapping with ESP8266 HW I2C
+
 
 
 void incrementCounter() {  // IRQ handler
   pulse_count++;
+}
+
+void drawFlowRate() {
+  u8g2.clearBuffer(); // clear the internal memory
+  u8g2.setFont(FONT);
+  u8g2.setCursor(0,24);
+  u8g2.print(flow_rate, 1);
+  u8g2.sendBuffer();
 }
 
 void setup() {
@@ -27,19 +38,20 @@ void setup() {
 
   pinMode(FLOW_SENSOR_PIN, INPUT_PULLUP);
 
-  String sOut = "mikrofon";
+
   u8g2.clearBuffer(); // clear the internal memory
-  u8g2.setFont(u8g2_font_8x13B_mf);
-  u8g2.drawStr(20,20,sOut.c_str());
+  u8g2.setFont(FONT);
+  u8g2.drawStr(0,24,"Hello");
   u8g2.sendBuffer();
 
   // attachInterrupt(digitalPinToInterrupt(FLOW_SENSOR_PIN), incrementCounter, FALLING);
 
+  delay(4000);
 }
 
 void loop() {
-  Serial.println(pulse_count);
-  delay(200);
+  drawFlowRate();
+  delay(2000);
   // if ((millis() - startTime) > 1000) {
   //
   //   flow_rate = flow_scale * pulse_count / (millis() - startTime);

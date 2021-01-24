@@ -1,5 +1,2 @@
 #define FLOW_SENSOR_PIN 0
-
-#define OLED_SDA 2
-#define OLED_SCL 14
-#define OLED_RST 4
+#define FONT u8g2_font_helvB24_te
