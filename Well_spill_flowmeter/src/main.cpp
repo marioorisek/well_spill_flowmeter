@@ -43,12 +43,10 @@ void setup() {
   u8g2.setFont(FONT_LARGE);
   u8g2.drawStr(0,24,"Hello");
   u8g2.sendBuffer();
-  noInterrupts();
-  attachInterrupt(digitalPinToInterrupt(FLOW_SENSOR_PIN), incrementCounter, FALLING);
+  // attachInterrupt(digitalPinToInterrupt(FLOW_SENSOR_PIN), incrementCounter, FALLING);
 
   delay(4000);
-  interrupts();
-}
+  }
 
 void loop() {
 
@@ -56,13 +54,12 @@ void loop() {
   delay(100);
 
   if ((millis() - startTime) > 1000) {
-    noInterrupts();
     flow_rate = flow_scale * pulse_count / (millis() - startTime);
     Serial.print("Current flow: ");
     Serial.print(flow_rate, 1);
     Serial.println(" l / min");
     pulse_count = 0;
     startTime = millis();
-    interrupts();
+  
   }
 }
