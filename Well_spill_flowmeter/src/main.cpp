@@ -47,7 +47,11 @@ void setup() {
   u8g2.setFont(FONT_LARGE);
   u8g2.drawStr(0,24,"Hello");
   u8g2.sendBuffer();
+<<<<<<< HEAD
   attachInterrupt(digitalPinToInterrupt(FLOW_SENSOR_PIN), incrementCounter, FALLING);
+=======
+  // attachInterrupt(digitalPinToInterrupt(FLOW_SENSOR_PIN), incrementCounter, FALLING);
+>>>>>>> 57fe89ccbaac8d3b9e01e4ffa11d2306c33c693e
 
   delay(4000);
   }
@@ -68,6 +72,10 @@ void loop() {
 
     pulse_count = 0;
     startTime = millis();
+<<<<<<< HEAD
 
+=======
+  
+>>>>>>> 57fe89ccbaac8d3b9e01e4ffa11d2306c33c693e
   }
 }
